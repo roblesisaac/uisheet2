@@ -4,6 +4,13 @@ const { Chain, convert, obj, type } = require("./scripts/chain");
 
 const handle = new Chain({
   steps: {
+		roce: function(a, next) {
+      next({
+        name: obj.deep(a, "name.first"),
+        message: "chain is running!",
+        event: this.event
+      });
+		},
     respond: function(event, next) {
       var a = {
         name: {
@@ -15,17 +22,12 @@ const handle = new Chain({
         a.name.first += item;
         nx();
       }).then(() => {
-        next({
-          test,
-          name: obj.deep(a, "name.first"),
-          message: "chain is running!",
-          event
-        });
+				next(a)
       });
     }
   },
   instruct: {
-    serve: (event) => [{ respond: event }]
+    serve: (event) => [{ event }, { respond: event }, "roce"]
   }
 });
 
