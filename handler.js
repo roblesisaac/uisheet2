@@ -9,7 +9,7 @@ const handle = new Chain({
     }
   },
   instruct: {
-    serve: (event) => [(last, next) => { next("hello") }, { respond: "last" }]
+    serve: (event) => [(last, next) => { next("hellos") }, { respond: "last" }]
   }
 });
 
