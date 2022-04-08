@@ -85,13 +85,14 @@ var obj = {
         });
     },
     deep: function(object, props, sliced) {
-        if (!object || !props) return;
+        if (!object || !props || (sliced && !sliced.length)) return;
 
-        if (typeof props != "string") return props;
-
-        if (!Array.isArray(props)) props = props.split(".");
-
-        sliced = sliced || props.slice();
+        if (typeof props != "string" && !sliced) return props;
+        
+        if(!sliced) {
+            if (!Array.isArray(props)) props = props.split(".");
+            sliced = props.slice();   
+        }
 
         var nested = object[sliced.shift()];
 
