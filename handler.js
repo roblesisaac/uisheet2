@@ -12,7 +12,7 @@ const db = new Chain({
 		init: () => [
 			"initMongo"
 		]	
-	};
+	}
 });
 
 const handle = new Chain({
