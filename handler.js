@@ -6,7 +6,7 @@ const handle = new Chain({
   steps: {
     respond: function(event) {
       this.next({
-        time,
+        time: convert.toArray("12"),
         message: "chain is running!",
         event
       });
