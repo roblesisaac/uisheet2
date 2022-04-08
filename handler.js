@@ -6,6 +6,7 @@ const handle = new Chain({
   steps: {
     respond: function(event) {
       this.next({
+        time,
         message: "chain is running!",
         event
       });
@@ -17,5 +18,7 @@ const handle = new Chain({
 });
 
 module.exports.port = async (event) => {
-  return await handle.serve(event).then(response => response);
+  return await handle.serve(event)
+                .then(response => response)
+                .catch(e => e);
 };
