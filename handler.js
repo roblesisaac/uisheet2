@@ -6,7 +6,7 @@ const handle = new Chain({
   steps: {
 		roce: function(last, event) {
 			var a = obj.deep(this, last);
-      next({
+      this.next({
         name: obj.deep(a, "name.first"),
         message: "chain is running!",
         event
