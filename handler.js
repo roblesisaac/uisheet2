@@ -28,6 +28,6 @@ const handle = new Chain({
   }
 });
 
-module.exports.port = handle.serve(event)
+module.exports.port = async event => handle.serve(event)
                 .then(response => response)
                 .catch(e => e);
