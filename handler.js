@@ -17,7 +17,7 @@ const db = new Chain({
 
 const handle = new Chain({
   steps: {
-    respond: function(last, next) {
+    respond: (last, next) => {
 	next(last);
     }
   },
