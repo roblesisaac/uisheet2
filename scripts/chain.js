@@ -639,3 +639,5 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
         }
     }.init();
 }
+
+module.exports = Chain;
