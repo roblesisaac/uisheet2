@@ -89,6 +89,7 @@ var obj = {
         
         if(!sliced) {
             if (typeof props == "string") props = props.split(".");
+            if(!props.slice) return props;
             sliced = props.slice();   
         }
 
