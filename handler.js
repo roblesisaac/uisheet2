@@ -12,7 +12,7 @@ const handle = new Chain({
     }
   },
   instruct: {
-    serve: (event) => { respond: event } 
+    serve: (event) => [{ respond: event }]
   }
 });
 
