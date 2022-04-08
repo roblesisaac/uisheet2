@@ -555,13 +555,14 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
             };
 
             var setupArgs = () => {
-                var arr = [memory.last, next];
+                var arr = [memory.last];
 
                 if (isObj && specials.excludes(methodName)) {
                     arr = currentPrint[methodName];
                     arr = convert.toArray(arr);
-                    if (arr.length == 1) arr = arr.concat(next);
-                }
+                }                
+                
+                arr.push(next);
 
                 return arr;
             };
@@ -639,4 +640,6 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
     }.init();
 }
 
-module.exports = { Chain, convert, obj, type };
+if(typeof module != "undefined") {
+    module.exports = { Chain, convert, obj, type };
+}
