@@ -640,4 +640,4 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
     }.init();
 }
 
-module.exports = Chain;
+module.exports = { Chain, convert, obj, type };
