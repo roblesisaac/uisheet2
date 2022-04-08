@@ -2,6 +2,19 @@
 
 const { Chain, convert, obj, type } = require("./scripts/chain");
 
+const db = new Chain({
+	steps: {
+		initMongo: function() {
+			this.next("mongo is running");
+		}
+	},
+	instruct: {
+		init: () => [
+			"initMongo"
+		]	
+	};
+});
+
 const handle = new Chain({
   steps: {
     respond: function(last, next) {
@@ -10,7 +23,7 @@ const handle = new Chain({
   },
   instruct: {
     serve: (event) => [
-	    (last, next) => { next(event) }, 
+	    db.init, 
 	    "respond"
     ]
   }
