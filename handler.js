@@ -5,10 +5,21 @@ const { Chain, convert, obj, type } = require("./scripts/chain");
 const handle = new Chain({
   steps: {
     respond: function(event) {
-      this.next({
-        time: convert.toArray("12"),
-        message: "chain is running!",
-        event
+      var a = {
+        name: {
+          first: "isaac"
+        }
+      };
+      
+      [1,2,3].loop((i, item , nx) => {
+        a.name.first += item;
+        nx();
+      }).then(() => {
+        this.next({
+          name: obj.deep(a, "name.first"),
+          message: "chain is running!",
+          event
+        });
       });
     }
   },
