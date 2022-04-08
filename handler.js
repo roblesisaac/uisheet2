@@ -1,6 +1,6 @@
 'use strict';
 
-import Chain from "/srcipts/chain.js";
+const Chain = require("./scripts/chain");
 
 module.exports.port = async (event) => {
 
