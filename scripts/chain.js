@@ -85,12 +85,10 @@ var obj = {
         });
     },
     deep: function(object, props, sliced) {
-        if (!object || !props || (sliced && !sliced.length)) return;
-
-        if (typeof props != "string" && !sliced) return props;
+        if (!object || !props) return;
         
         if(!sliced) {
-            if (!Array.isArray(props)) props = props.split(".");
+            if (typeof props == "string") props = props.split(".");
             sliced = props.slice();   
         }
 
