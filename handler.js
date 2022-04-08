@@ -5,7 +5,7 @@ const { Chain, convert, obj, type } = require("./scripts/chain");
 const handle = new Chain({
   steps: {
     respond: function(last, next) {
-	next(last);
+	next({last});
     }
   },
   instruct: {
