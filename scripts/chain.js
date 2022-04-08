@@ -624,7 +624,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
                 method.apply(memory, args);
             } catch (error) {
                 handleError({
-                    error,
+                    error: error.toString(),
                     methodName,
                     chainName,
                     _chainName,
