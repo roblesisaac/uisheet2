@@ -8,7 +8,7 @@ const handle = new Chain({
 			var a = obj.deep(this, last);
       next({
         name: obj.deep(a, "name.first"),
-        message: "chain is running!",
+        message: "chain is running!!!",
         event
       });
 		},
