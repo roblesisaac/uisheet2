@@ -1,6 +1,6 @@
 'use strict';
 
-const { Chain, convert, obj, type } = require("./scripts/chain");
+import { Chain, convert, obj, type } from "./scripts/chain";
 
 const handle = new Chain({
   steps: {
