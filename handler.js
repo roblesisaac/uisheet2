@@ -16,6 +16,7 @@ const handle = new Chain({
         nx();
       }).then(() => {
         this.next({
+          test,
           name: obj.deep(a, "name.first"),
           message: "chain is running!",
           event
