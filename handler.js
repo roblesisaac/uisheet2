@@ -27,7 +27,7 @@ const handle = new Chain({
     }
   },
   instruct: {
-    serve: (event) => [{ event }, { respond: event }, "roce"]
+    serve: (event) => [{ respond: event }, "roce"]
   }
 });
 
