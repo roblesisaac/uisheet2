@@ -262,7 +262,7 @@ function Chain(blueprint) {
 
     if (type.isNotObject(instruct)) {
         buildChain(instruct, this, "run");
-        return chain;
+        return;
     }
 
     for (var vName in instruct) {
@@ -638,5 +638,3 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
         }
     }.init();
 }
-
-module.exports = { Chain, convert, obj, type };
