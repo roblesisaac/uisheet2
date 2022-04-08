@@ -4,9 +4,9 @@ const { Chain, convert, obj, type } = require("./scripts/chain");
 
 const handle = new Chain({
   steps: {
-		roce: function(last, event) {
+		roce: function(last, event, next) {
 			var a = obj.deep(this, last);
-      this.next({
+      next({
         name: obj.deep(a, "name.first"),
         message: "chain is running!",
         event
