@@ -51,6 +51,8 @@ functions:
     timeout: 30    
     events:
       - httpApi: "any /"
+      - httpApi: "any /{site}"
+      - httpApi: "any /{site}/{sheetName}"
       - httpApi: "any /{site}/{sheetName}/{chain}"
       - httpApi: "any /{site}/{sheetName}/{chain}/{arg}"
 
