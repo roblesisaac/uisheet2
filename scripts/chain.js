@@ -23,7 +23,7 @@ const handle = new Chain({
   },
   instruct: {
     serve: (event) => [
-    	db.init
+    	db.init, "respond"
     ]
   }
 });
