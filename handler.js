@@ -2,13 +2,6 @@
 
 const { Chain, convert, obj, type } = require("./scripts/chain");
 
-Chain.prototype.addGlobalSteps({
-	has: function(props) {
-		var item = obj.deep(this, props);
-		this.next(!!item || item === 0);
-	}
-});
-
 const db = new Chain({
 	steps: {
 		initMongo: function() {
@@ -33,13 +26,7 @@ const handle = new Chain({
   },
   instruct: {
     serve: (event) => [
-// 			{ event },
-// 			{ params: "event.pathParameters" },
-    	db.init
-// 			{ 
-// 				if: { has: "params.chain" },
-// 				true: "runChain"
-// 			}
+    	db.init, "respond"
     ]
   }
 });
