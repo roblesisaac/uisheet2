@@ -1,7 +1,5 @@
 'use strict';
 
-try {
-
 const { Chain, convert, obj, type } = require("./scripts/chain");
 
 const db = new Chain({
@@ -21,10 +19,7 @@ const handle = new Chain({
   steps: {
     respond: (last, next) => {
 			next(last);
-    },
-		runChain: function() {
-			this.next({ chainIs: this.params.chain });
-		}
+    }
   },
   instruct: {
     serve: (event) => [
@@ -36,9 +31,3 @@ const handle = new Chain({
 module.exports.port = async event => handle.serve(event)
                 .then(response => response)
                 .catch(e => e);
-
-} catch (err) {
-module.exports.port = async () => {
-	return { err };
-}
-}
