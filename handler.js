@@ -32,7 +32,7 @@ const handle = new Chain({
     serve: (event) => [
 			{ event },
 			{ path: "event" },
-			(res, next) => { next(this.event) }
+			(res, next) => { next(event) }
     ]
   }
 });
