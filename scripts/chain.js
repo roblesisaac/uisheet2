@@ -32,8 +32,7 @@ const handle = new Chain({
     serve: (event) => [
 			{ event },
 			{ path: "event" },
-    	db.init,
-			(last, next) => { next(this.path) }
+    	db.init
     ]
   }
 });
