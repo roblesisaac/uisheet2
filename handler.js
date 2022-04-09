@@ -26,13 +26,16 @@ const handle = new Chain({
   steps: {
     respond: (last, next) => {
 			next(last);
-    }
+    },
+		serveEvent: function() {
+			this.next({ event: this.event, path: this.path });
+		}
   },
   instruct: {
     serve: (event) => [
 			{ event },
 			{ path: "event" },
-			(res, next) => { next(event) }
+			"serveEvent"
     ]
   }
 });
