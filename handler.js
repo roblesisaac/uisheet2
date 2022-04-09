@@ -26,15 +26,13 @@ const handle = new Chain({
   steps: {
     respond: (last, next) => {
 			next(last);
-    },
-		serveEvent: function() {
-			this.next({ event: this.event, path: this.path });
-		}
+    }
   },
   instruct: {
     serve: (event) => [
 			{ event },
 			{ path: "event.pathParameters" },
+			db.init,
 			{
 				if: { has: "path.chain" },
 				true: function() {
