@@ -33,13 +33,13 @@ const handle = new Chain({
 			{ event },
 			{ path: "event.pathParameters" },
 			db.init,
-			{
-				if: { has: "path.chain" },
-				true: function() {
-					var chain = this.path.chain;
-					this.next({ chain });
-				}
-			}
+// 			{
+// 				if: { has: "path.chain" },
+// 				true: function() {
+// 					var chain = this.path.chain;
+// 					this.next({ chain });
+// 				}
+// 			}
     ]
   }
 });
