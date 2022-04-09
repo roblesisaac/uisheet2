@@ -34,8 +34,14 @@ const handle = new Chain({
   instruct: {
     serve: (event) => [
 			{ event },
-			{ path: "event" },
-			"serveEvent"
+			{ path: "event.pathParameters" },
+			{
+				if: { has: "path.chain" },
+				true: function() {
+					var chain = this.path.chain;
+					this.next({ chain });
+				}
+			}
     ]
   }
 });
