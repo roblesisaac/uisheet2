@@ -33,13 +33,13 @@ const handle = new Chain({
   },
   instruct: {
     serve: (event) => [
-			{ event },
-			{ params: "event.pathParameters" },
-    	db.init,
-			{ 
-				if: { has: "params.chain" },
-				true: "runChain"
-			}
+// 			{ event },
+// 			{ params: "event.pathParameters" },
+    	db.init
+// 			{ 
+// 				if: { has: "params.chain" },
+// 				true: "runChain"
+// 			}
     ]
   }
 });
