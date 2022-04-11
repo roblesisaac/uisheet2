@@ -34,10 +34,8 @@ const handle = new Chain({
   },
   instruct: {
     serve: (event) => [
-			{ 
-				event,
-				path: "event.pathParameters"
-			},
+			{ event	},
+			{ path: "event.pathParameters" },
 			db.init,
 			{
 				if: { has: "path.chain" },
