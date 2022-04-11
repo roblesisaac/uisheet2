@@ -12,7 +12,11 @@ Chain.prototype.addGlobalSteps({
 const db = new Chain({
 	steps: {
 		initMongo: function() {
-			this.next("mongo is running");
+			this.next({
+				message: "mongo is running",
+				path: this.path,
+				event: this.event
+			});
 		}
 	},
 	instruct: {
