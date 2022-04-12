@@ -479,5 +479,5 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
 }
 
 if(typeof module != "undefined") {
-    module.exports = { Chain, convert, obj, type };
+    module.exports = { Chain };
 }
