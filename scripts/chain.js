@@ -130,7 +130,7 @@ Chain.prototype._library = {
 }
 
 Chain.prototype.addGlobalSteps = function(steps) {
-	Object.assign(Chain.prototype._library.steps, steps);
+    Object.assign(Chain.prototype._library.steps, steps);
 }
 
 function buildChain(stepsArr, chain, chainName) {
@@ -318,8 +318,8 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
                 if (isObj && specials.excludes(methodName)) {
                     arr = currentPrint[methodName];
                     arr = convert.toArray(arr);
-                }                
-                
+                }
+
                 arr.push(next);
 
                 return arr;
@@ -363,13 +363,13 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
             }
 
             if (typeof method != "function") {
-								var data = stepData();
+                var data = stepData();
 
-								for(var key in data) {
-									var value = data[key];
+                for (var key in data) {
+                    var value = data[key];
 
-									data[key] = obj.deep(memory, value) || value;
-								}
+                    data[key] = obj.deep(memory, value) || value;
+                }
 
                 memory._remember(data);
                 return next();
@@ -406,6 +406,4 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
     }.init();
 }
 
-if(typeof module != "undefined") {
-    module.exports = { Chain, convert, obj, type };
-}
+module.exports = { Chain, convert, obj, type };
