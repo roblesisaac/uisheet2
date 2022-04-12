@@ -1,11 +1,6 @@
 'use strict';
 
-const {
-  Chain,
-  convert,
-  obj,
-  type
-} = require("./scripts/chain");
+const { Chain, convert, obj, type } = require("./scripts/chain");
 
 Chain.prototype.addGlobalSteps({
   has: function(props) {
@@ -50,9 +45,7 @@ const handle = new Chain({
         },
         true: function() {
           var chain = this.path.chain;
-          this.next({
-            chain
-          });
+          this.next({ chain, message: "working!" });
         }
       }
     ]
