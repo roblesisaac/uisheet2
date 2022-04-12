@@ -1,3 +1,5 @@
+const = { obj, convert, type } = require("./scripts/utils");
+
 function Memory(chain) {
     var bp = chain._blueprint,
         format = data => obj.copy(convert.toObject(data || {}, chain));
