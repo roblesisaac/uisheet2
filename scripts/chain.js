@@ -174,11 +174,11 @@ function getStep(sIndex, args) {
 }
 
 function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
-  stepsArr = stepsArr.slice();
-
   if (!stepsArr || !stepsArr.length) {
     return;
   }
+  
+  stepsArr = stepsArr.slice();
 
   var stepPrint = stepsArr.shift(),
       isObj = type.isObject(stepPrint),
