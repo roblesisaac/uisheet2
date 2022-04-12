@@ -1,4 +1,4 @@
-const { obj, convert, type } = require("./utils");
+const { convert, obj, type } = require("./utils");
 
 function Memory(chain) {
     var bp = chain._blueprint,
@@ -481,5 +481,5 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
 }
 
 if(typeof module != "undefined") {
-    module.exports = { Chain, obj, convert, type };
+    module.exports = { Chain, convert, obj, type };
 }
