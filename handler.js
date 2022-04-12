@@ -29,7 +29,7 @@ const db = new Chain({
 const handle = new Chain({
   steps: {
     respond: (last, next) => {
-      next(last);
+      next({ last });
     }
   },
   instruct: {
@@ -47,7 +47,8 @@ const handle = new Chain({
           var chain = this.path.chain;
           this.next({ chain, message: "working!" });
         }
-      }
+      },
+      "respond"
     ]
   }
 });
