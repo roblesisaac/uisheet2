@@ -1,6 +1,5 @@
 'use strict';
 
-const = { obj, convert, type } = require("./scripts/utils.js");
 const { Chain } = require("./scripts/chain");
 
 Chain.prototype.addGlobalSteps({
