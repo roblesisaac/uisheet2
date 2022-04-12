@@ -1,4 +1,4 @@
-const = { obj, convert, type } = require("utils.js");
+const = { obj, convert, type } = require("./utils.js");
 
 function Memory(chain) {
     var bp = chain._blueprint,
