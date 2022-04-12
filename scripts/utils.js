@@ -111,7 +111,7 @@ var obj = {
       }
     });
   },
-  valueTip: function(obj, props, sliced) {
+  tip: function(obj, props, sliced) {
     if (!obj) return;
 
     if (!Array.isArray(props)) props = props.split(".");
@@ -120,7 +120,7 @@ var obj = {
       nested = arrProps.length > 1 ? obj[arrProps.shift()] : obj;
 
     return arrProps.length > 1 ?
-      this.valueTip(nested, arrProps, true) : {
+      this.tip(nested, arrProps, true) : {
         obj: nested,
         prop: arrProps[0]
       };
