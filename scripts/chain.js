@@ -40,8 +40,8 @@ Chain.prototype._library = {
     },
     each: function(notSure, next) {
       var each = this._step.each,
-        getData = each.each,
-        iteration = each.run || each.async;
+          getData = each.each,
+          iteration = each.run || each.async;
 
       var methodForEach = (i, item, nxt) => {
         this._remember({ i, item });
@@ -185,11 +185,11 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
       specials = chain._library.specials,
       index = stepIndex || 0;
 
-  var methodName = typeof stepPrint == "string" ?
-      stepPrint :
-      type.isObject(stepPrint) ?
-      Object.keys(stepPrint)[0] :
-      stepPrint.name || typeof stepPrint;
+  var methodName = typeof stepPrint == "string" 
+        ? stepPrint
+        : type.isObject(stepPrint)
+        ? Object.keys(stepPrint)[0]
+        : stepPrint.name || typeof stepPrint;
 
   var buildSub = function(index, sProp, instructs, previous) {
     instructs = instructs || stepsArr;
@@ -303,9 +303,9 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
         return;
       }
 
-      var variation = methodName == "chainMethod" ?
-        stepPrint :
-        chain[methodName];
+      var variation = methodName == "chainMethod" 
+            ? stepPrint
+            : chain[methodName];
 
       if (variation) {
         variation.steps(_args).method(memory, next);
@@ -332,15 +332,12 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
       }
 
       var args = setupArgs(),
-        data = stepData(methodName),
-        autoCompletes = method.toString().includesAny("next", "return;");
+          data = stepData(methodName),
+          autoCompletes = method.toString().includesAny("next", "return;");
 
       memory
         ._remember(data)
-        ._addTools({
-          _step: this,
-          next
-        });
+        ._addTools({ _step: this, next });
 
       try {
         method.apply(memory, args);
