@@ -41,7 +41,7 @@ const handle = new Chain({
       db.init,
       {
         if: {
-          has: "path.chain"
+          has: "path.chains"
         },
         true: function() {
           var chain = this.path.chain;
