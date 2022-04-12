@@ -91,13 +91,11 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
   if (!stepsArr || !stepsArr.length) {
     return;
   }
-  
-  stepsArr = stepsArr.slice();
 
-  var stepPrint = stepsArr.shift(),
+  var index = stepIndex || 0,
+      stepPrint = stepsArr[index],
       isObj = type.isObject(stepPrint),
-      specials = chain._library.specials,
-      index = stepIndex || 0;
+      specials = chain._library.specials;
 
   var methodName = typeof stepPrint == "string" 
         ? stepPrint
@@ -115,7 +113,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
   return {
     chain,
     chainName,
-    isFinalStep: !stepsArr.length,
+    isFinalStep: stepsArr.length == index+1,
     isSpecial: specials.includes(methodName),
     index,
     methodName,
