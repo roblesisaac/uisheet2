@@ -1,6 +1,7 @@
 'use strict';
 
-const { Chain, obj, convert, type } = require("./scripts/chain");
+const { obj, convert, type } = require("./scripts/utils");
+const { Chain } = require("./scripts/chain");
 
 Chain.prototype.addGlobalSteps({
 	has: function(props) {
