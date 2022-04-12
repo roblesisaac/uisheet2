@@ -182,10 +182,8 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
       };
 
       var setupArgs = () => {
-        var args = stepPrint[methodName];
-
         var arr = isObj && !isSpecial 
-              ? convert.toArray(args)
+              ? convert.toArray(stepPrint[methodName])
               : [memory.last];
 
         arr.push(next);
