@@ -1,4 +1,4 @@
-module.exports = {
+const globalSteps = {
     "&": function(last) {
       if (!this._conditions) {
         this._addTools({
@@ -86,3 +86,5 @@ module.exports = {
       setTimeout(next, time * 1000);
     }
 };
+
+module.exports = { globalSteps };
