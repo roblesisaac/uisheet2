@@ -13,7 +13,7 @@ const db = new Chain({
   instruct: {
     init: () => [
       "initMongo",
-      { wait: 3 }
+      { wait: 10 }
     ]
   }
 });
