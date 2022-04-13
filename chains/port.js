@@ -1,13 +1,6 @@
 const { Chain, convert, obj, type } = require("scripts/chain");
 const { db } = require("./db");
 
-Chain.prototype.addGlobalSteps({
-  has: function(props) {
-    var item = obj.deep(this, props);
-    this.next(!!item || item === 0);
-  }
-});
-
 const port = new Chain({
   steps: {
     respond: (last, next) => {
