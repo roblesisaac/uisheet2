@@ -1,5 +1,5 @@
 const { Chain, convert, obj, type } = require("scripts/chain");
-const { db } = require("./db");
+const db = require("./db");
 const brain = require("./brain");
 
 var chains = {
