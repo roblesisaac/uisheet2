@@ -66,15 +66,9 @@ function buildChain(stepsArr, chain, chainName) {
 }
 
 function getStep(sIndex, args, steps) {
-  if(steps && steps.missingIndex) {
-    return steps;
-  }
+  steps = steps || this.steps(args);
   
-  if(!steps) {
-    steps = this.steps(args);
-  }
-  
-  return steps.index == sIndex
+  return steps.index == sIndex || steps.missingIndex
     ? steps
     : getStep(sIndex, args, steps.nextStep() || { missingIndex: sIndex });
 }
