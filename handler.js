@@ -7,5 +7,5 @@ module.exports.port = async event => port.serve(event)
   .then(response => response)
   .catch(e => e);
 } catch (e) {
-  return { error: e.toString() }
+  module.exports.port = async () => { return e.toString() }
 }
