@@ -24,7 +24,7 @@ const db = new Chain({
   }
 });
 
-const handle = new Chain({
+const port = new Chain({
   steps: {
     respond: (last, next) => {
       next({ last });
@@ -51,4 +51,4 @@ const handle = new Chain({
   }
 });
 
-module.exports = { handle };
+module.exports = { port };
