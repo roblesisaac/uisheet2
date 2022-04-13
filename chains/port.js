@@ -13,7 +13,7 @@ const port = new Chain({
 		  getPath(event),
 		  {
 		  	if: { has: "chain" },
-				true: obj.deep(chains, getPath(event).chain)
+			true: obj.deep(chains, getPath(event).chain)
 		  }
 	]
 });
