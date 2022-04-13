@@ -1,3 +1,5 @@
+const { Chain } = require("scripts/chain");
+
 const db = new Chain({
   steps: {
     initMongo: function() {
