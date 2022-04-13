@@ -38,6 +38,9 @@ const globalSteps = {
       next();
     });
   },
+  end: function () {
+    this._addTools({ _endAll: true });
+  },
   if: function(last, next) {
     var data = this._step.if,
         condition = data.if || data.switch;
@@ -86,5 +89,3 @@ const globalSteps = {
     setTimeout(next, time * 1000);
   }
 }
-
-module.exports = { globalSteps };
