@@ -1,26 +1,10 @@
 const { Chain, convert, obj, type } = require("scripts/chain");
+const { db } = require("./db");
 
 Chain.prototype.addGlobalSteps({
   has: function(props) {
     var item = obj.deep(this, props);
     this.next(!!item || item === 0);
-  }
-});
-
-const db = new Chain({
-  steps: {
-    initMongo: function() {
-      this.next({
-        message: "mongo is running",
-        path: this.path,
-        event: this.event
-      });
-    }
-  },
-  instruct: {
-    init: () => [
-      "initMongo"
-    ]
   }
 });
 
