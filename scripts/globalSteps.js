@@ -48,6 +48,10 @@ const globalSteps = {
         
     return step.handleError(this, { _error });
   },
+  has: function(props) {
+    var item = obj.deep(this, props);
+    this.next(!!item || item === 0);
+  },
   if: function(last, next) {
     var data = this._step.if,
         condition = data.if || data.switch;
