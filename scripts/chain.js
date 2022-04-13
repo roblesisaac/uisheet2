@@ -11,7 +11,7 @@ function Chain(blueprint) {
   };
 
   Object.keys(natives).forEach((prop) => {
-    obj.assignNative(this, prop, natives[prop])
+    obj.assignNative(this, prop, natives[prop]);
   });
 
   if (!type.isObject(instruct)) {
@@ -28,17 +28,17 @@ Chain.prototype._library = {
   chains: {},
   specials: ["if", "each", "setup"],
   steps: globalSteps
-}
+};
 
 Chain.prototype.addGlobalSteps = function(steps) {
   Object.assign(Chain.prototype._library.steps, steps);
-}
+};
 
 function buildChain(stepsArr, chain, chainName) {
   var getSteps = function(args) {
     var instructs = convert.toInstruct(stepsArr, args);
     return buildSteps(instructs, chain, chainName);
-  }
+  };
   
   var chainMethod = function(memory) {
     var _args = arguments;
@@ -47,13 +47,13 @@ function buildChain(stepsArr, chain, chainName) {
       return memory && memory._remember
         ? memory
         : new Memory(chain)._addTools({ _res, _rej, _chainName, _args });
-    }
+    };
 
     return new Promise(function(res, rej) {
       var steps = getSteps(_args);
       steps.method(getMemory(res, rej, chainName));
     });
-  }
+  };
 
   chainMethod.steps = getSteps;
   chainMethod.step = getStep;
@@ -153,7 +153,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
         _chainName,
         prev,
         stepPrint
-      }
+      };
       
       if (_rej && typeof _rej == "function") {
         _rej(errMessage);
@@ -165,7 +165,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
     },
     method: function(memory, rabbitTrail) {
       var { nextStep, isFinalStep, isSpecial, handleError } = this,
-          { _rej, _res, _chainName, _args } = memory;
+          { _res, _chainName, _args } = memory;
 
       var method = chain._steps[methodName] || stepPrint,
           updater = specialProp == "if" ? "_condition" : "last";
@@ -187,7 +187,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
           }
 
           return;
-        };
+        }
 
         nextStep.call(this).method(memory, rabbitTrail);
       };
@@ -209,7 +209,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
 
         for (var i in arguments) {
           delete stepPrint[arguments[i]];
-        };
+        }
 
         return stepPrint;
       };
