@@ -17,4 +17,4 @@ const db = new Chain({
   }
 });
 
-module.exports = { db };
+module.exports = db;
