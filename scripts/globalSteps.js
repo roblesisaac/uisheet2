@@ -90,4 +90,4 @@ const globalSteps = {
   }
 }
 
-moduel.exports = { globalSteps };
+module.exports = { globalSteps };
