@@ -165,7 +165,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
     },
     method: function(memory, rabbitTrail) {
       var { nextStep, isFinalStep, isSpecial, handleError } = this,
-          { _res, _chainName, _args } = memory;
+          { _res, _args } = memory;
 
       var method = chain._steps[methodName] || stepPrint,
           updater = specialProp == "if" ? "_condition" : "last";
