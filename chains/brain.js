@@ -1,3 +1,5 @@
+const { Chain } = require("scripts/chain");
+
 const brain = new Chain({
   input: {
     brainKey: "brain1234"
