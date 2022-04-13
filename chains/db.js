@@ -12,7 +12,7 @@ const db = new Chain({
   },
   instruct: {
     init: () => [
-      "initMongo", { error: "no db key" }
+      "initMongo"
     ]
   }
 });
