@@ -27,4 +27,4 @@ const port = new Chain({
   }
 });
 
-module.exports = { port };
+module.exports = port;
