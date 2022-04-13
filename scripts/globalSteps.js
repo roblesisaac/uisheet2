@@ -89,3 +89,5 @@ const globalSteps = {
     setTimeout(next, time * 1000);
   }
 }
+
+moduel.exports = { globalSteps };
