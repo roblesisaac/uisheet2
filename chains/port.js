@@ -9,13 +9,13 @@ const getPath = event => event.pathParametersl
 
 const port = new Chain({
   instruct: event => [
-		  { event },
-		  getPath(event),
-		  {
-		  	if: { has: "chain" },
-			true: obj.deep(chains, getPath(event).chain)
-		  }
-	]
+	  { event },
+	  getPath(event),
+	  {
+		if: { has: "chain" },
+		true: obj.deep(chains, getPath(event).chain)
+	  }
+]
 });
 
 module.exports = port;
