@@ -1,10 +1,9 @@
-const { Chain } = require("scripts/chain");
+const { Chain } = require("scripts/chains");
 
 const db = new Chain({
   steps: {
     initMongo: function() {
       this.next({
-        oak,
         message: "mongo is running",
         path: this.path,
         event: this.event
