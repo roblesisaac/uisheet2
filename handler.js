@@ -2,7 +2,7 @@
 
 try {
   
-const { port } = require("./chains/port");
+const port = require("./chains/port");
 
 module.exports.port = async event => port.serve(event)
   .then(response => response)
