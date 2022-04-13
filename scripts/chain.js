@@ -144,10 +144,10 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
     nextStep: function() {
       return buildSub.call(this, index + 1);
     },
-    handleError: function(memory, e) {
+    handleError: function(memory, error) {
       var { _rej, _chainName } = memory,
         errMessage = {
-        error: e,
+        error,
         methodName,
         chainName,
         _chainName,
