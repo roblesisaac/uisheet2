@@ -12,16 +12,17 @@ const port = new Chain({
     }
   },
   instruct: {
-    serve: event => [
-      { 
-      	event,
-      	path: event.pathParameters
-      },
-      {
-        if: { has: "path.chain" },
-        true: obj.deep(chains, event.pathParameters.chain)
-      }
-    ]
+    serve: (event) => {
+			var path = event.pathParameters
+			
+			return [
+				{ event, path	}, path,
+				{
+					if: { has: "path.chain" },
+					true: obj.deep(chains, event.pathParameters.chain)
+				}
+			];
+		}
   }
 });
 
