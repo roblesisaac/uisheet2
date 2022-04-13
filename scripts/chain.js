@@ -144,8 +144,27 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
     nextStep: function() {
       return buildSub.call(this, index + 1);
     },
+    handleError: function(memory, e) {
+      var { _rej, _chainName } = memory,
+        errMessage = {
+        error: e,
+        methodName,
+        chainName,
+        _chainName,
+        prev,
+        stepPrint
+      }
+      
+      if (_rej && typeof _rej == "function") {
+        _rej(errMessage);
+        return;
+      }
+
+      console.error(errMessage);
+      return;
+    },
     method: function(memory, rabbitTrail) {
-      var { nextStep, isFinalStep, isSpecial } = this,
+      var { nextStep, isFinalStep, isSpecial, handleError } = this,
           { _rej, _res, _chainName, _args } = memory;
 
       var method = chain._steps[methodName] || stepPrint,
@@ -195,13 +214,8 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
         return stepPrint;
       };
 
-      var handleError = function(e) {
-        if (_rej && typeof _rej == "function") {
-          _rej(e);
-          return;
-        }
-
-        console.error(e);
+      if(memory._error) {
+        handleError(memory, memory._error);
         return;
       }
 
@@ -234,7 +248,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
 
       var args = setupArgs(),
           data = stepData(methodName),
-          autoCompletes = method.toString().includesAny("next", "return;");
+          autoCompletes = method.toString().includesAny("next", "return");
 
       memory
         ._remember(data)
@@ -243,13 +257,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
       try {
         method.apply(memory, args);
       } catch (error) {
-        handleError({
-          error: error.toString(),
-          methodName,
-          chainName,
-          _chainName,
-          stepPrint
-        });
+        handleError(memory, error.toString());
         return;
       }
 
