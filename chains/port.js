@@ -1,4 +1,4 @@
-const { Chain, convert, obj, type } = require("./scripts/chain");
+const { Chain, convert, obj, type } = require("/scripts/chain");
 
 Chain.prototype.addGlobalSteps({
   has: function(props) {
