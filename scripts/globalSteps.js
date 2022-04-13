@@ -1,3 +1,5 @@
+const { convert, obj, type } = require("./utils");
+
 const globalSteps = {
   "&": function(last) {
     if (!this._conditions) {
