@@ -4,7 +4,7 @@ try {
   
 const port = require("./chains/port");
 
-module.exports.port = async event => port.serve(event)
+module.exports.port = async event => port.run(event)
   .then(response => response)
   .catch(e => e);
   
