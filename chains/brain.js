@@ -14,4 +14,4 @@ const brain = new Chain({
   }
 });
 
-module.exports = { brain };
+module.exports = brain;
