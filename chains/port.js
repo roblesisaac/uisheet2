@@ -1,10 +1,8 @@
 const { Chain, convert, obj, type } = require("scripts/chain");
-const db = require("./db");
-const brain = require("./brain");
 
 var chains = {
-	brain,
-	db
+	brain: require("./brain"),
+	db: require("./db")
 };
 
 const port = new Chain({
