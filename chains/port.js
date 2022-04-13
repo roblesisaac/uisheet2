@@ -8,7 +8,7 @@ var chains = {
 const getPath = event => event.pathParametersl
 
 const port = new Chain({
- 	instruct: event => [
+	instruct: event => [
 	  { event },
 	  getPath(event),
 	  {
