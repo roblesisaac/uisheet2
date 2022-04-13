@@ -28,27 +28,29 @@ Memory.prototype._absorb = function(chain) {
         });
       };
 
-    var keys = Object.keys,
-      data = format(dataObj),
-      assignProp = (prop) => {
-        var value = data[prop];
+    var data = format(dataObj);
+    
+    var assignProp = (prop) => {
+      var value = data[prop];
 
-        if (keys(assignee).includes(prop)) return;
-
-        if (keys(chain).includes(prop)) {
-          getAndSetFromChain(prop);
-          return;
-        }
-
-        if (typeof value == "function") {
-          defineGetterMethod(value, prop);
-          return;
-        }
-
-        assignee[prop] = value;
+      if (obj.hasProp(assignee, prop)) {
+        return;
       };
 
-    keys(data).forEach(assignProp);
+      if (obj.hasProp(chain, prop)) {
+        getAndSetFromChain(prop);
+        return;
+      }
+
+      if (typeof value == "function") {
+        defineGetterMethod(value, prop);
+        return;
+      }
+
+      assignee[prop] = value;
+    };
+
+    Object.keys(data).forEach(assignProp);
   };
 
   assignProps(chain, bp.state);
