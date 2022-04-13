@@ -8,7 +8,7 @@ const port = new Chain({
     }
   },
   instruct: {
-    serve: (event) => [
+    serve: event => [
       { 
 	event,
 	path: event.pathParameters
