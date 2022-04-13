@@ -44,15 +44,9 @@ function buildChain(stepsArr, chain, chainName) {
     var _args = arguments;
 
     var getMemory = (_res, _rej, _chainName) => {
-      return memory && memory._remember ?
-        memory :
-        new Memory(chain)
-        ._addTools({
-          _res,
-          _rej,
-          _chainName,
-          _args
-        });
+      return memory && memory._remember
+        ? memory
+        : new Memory(chain)._addTools({ _res, _rej, _chainName, _args });
     }
 
     return new Promise(function(res, rej) {
@@ -71,24 +65,22 @@ function buildChain(stepsArr, chain, chainName) {
   obj.assignNative(chain, chainName, chainMethod);
 }
 
-function getStep(sIndex, args) {
-  var stepPrint = this.steps(args || []);
-
-  if (!stepPrint) return {
-    chainIsMissing: sIndex
-  };
-
-  for (var i = 0; i < sIndex; i++) {
-    stepPrint = stepPrint.nextStep() || {
-      indexNotFound: sIndex
-    };
+function getStep(sIndex, args, steps) {
+  if(steps && steps.missingIndex) {
+    return steps;
   }
-
-  return stepPrint;
+  
+  if(!steps) {
+    steps = this.steps(args);
+  }
+  
+  return steps.index == sIndex
+    ? steps
+    : getStep(sIndex, args, steps.nextStep() || { missingIndex: sIndex });
 }
 
 function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
-  if (!stepsArr || !stepsArr.length) {
+  if (!stepsArr || !stepsArr.length || stepIndex == stepsArr.length) {
     return;
   }
 
@@ -168,7 +160,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
           }
         }
 
-        if (isFinalStep) {
+        if (isFinalStep || memory._endAll) {
           var resolve = rabbitTrail || _res;
 
           if (typeof resolve == "function") {
@@ -224,8 +216,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
 
       if (methodName == "boolean") {
         memory[updater] = stepPrint;
-        next();
-        return;
+        return next();
       }
 
       if (typeof method != "function") {
