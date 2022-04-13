@@ -7,7 +7,7 @@ var chains = {
 
 const getPath = event => event.pathParametersl
 
-const port = new Chain({
+module.exports = new Chain({
 	instruct: event => [
 	  { event },
 	  getPath(event),
@@ -17,5 +17,3 @@ const port = new Chain({
 	  }
 	]
 });
-
-module.exports = port;
