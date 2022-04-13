@@ -1,6 +1,10 @@
 const { Chain, convert, obj, type } = require("scripts/chain");
 const { db } = require("./db");
 
+var chains = {
+	db
+};
+
 const port = new Chain({
   steps: {
     respond: (last, next) => {
@@ -10,20 +14,13 @@ const port = new Chain({
   instruct: {
     serve: event => [
       { 
-	event,
-	path: event.pathParameters
+      	event,
+      	path: event.pathParameters
       },
-      db.init,
       {
-        if: {
-          has: "path.chain"
-        },
-        true: function() {
-          var chain = this.path.chain;
-          this.next({ chain, message: "working!" });
-        }
-      },
-      "respond"
+        if: { has: "path.chain" },
+        true: obj.deep(chains, event.pathParameters.chain)
+      }
     ]
   }
 });
