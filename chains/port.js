@@ -5,7 +5,7 @@ var chains = {
 	db: require("./db")
 };
 
-const getPath = event => event.pathParametersl
+const getPath = event => event.pathParameters;
 
 module.exports = new Chain({
 	instruct: event => [
