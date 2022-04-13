@@ -38,8 +38,15 @@ const globalSteps = {
       next();
     });
   },
-  end: function () {
+  end: function (message) {
     this._addTools({ _endAll: true });
+    this.next(message);
+  },
+  error: function(error) {
+    var _error = "<(-_-)> " + error,
+        step = this._step;
+        
+    return step.handleError(this, { _error });
   },
   if: function(last, next) {
     var data = this._step.if,
