@@ -5,7 +5,7 @@ const brain = new Chain({
     brainKey: "brain1234"
   },
   steps: {
-    connectToBrain: (res, next) => {
+    connectToBrain: function(res, next) {
       next("connected to brain #" + this.brainKey);
     }
   },
