@@ -14,16 +14,16 @@ const port = new Chain({
   instruct: {
 		
     serve: function(event) {
-	    var path = event.pathParameters
+	    var path = event.pathParameters;
 	    
 	    return [
-		    { event, path	}, 
+		    { event, path }, 
 		    path,
-			{
-				if: !!path.chain,
-				true: obj.deep(chains, event.pathParameters.chain)
-			}
-	  ];
+  			{
+  				if: !!path.chain,
+  				true: obj.deep(chains, event.pathParameters.chain)
+  			}
+	    ];
   	}
 	
   }
