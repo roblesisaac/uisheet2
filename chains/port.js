@@ -5,22 +5,17 @@ var chains = {
 	db: require("./db")
 };
 
+const getPath = event => event.pathParametersl
+
 const port = new Chain({
-  steps: {
-    respond: (last, next) => {
-      next({ last });
-    }
-  },
-  instruct: {
-	  serve: event => [
+  instruct: event => [
 		  { event },
-		  event.pathParameters,
+		  getPath(event),
 		  {
 		  	if: { has: "chain" },
-			true: obj.deep(chains, event.pathParameters.chain)
+				true: obj.deep(chains, getPath(event).chain)
 		  }
-	  ]	
-  }
+	]
 });
 
 module.exports = port;
