@@ -19,10 +19,10 @@ const port = new Chain({
 	    return [
 		    { event, path }, 
 		    path,
-  			{
-  				if: !!path.chain,
-  				true: obj.deep(chains, event.pathParameters.chain)
-  			}
+			{
+				if: !!path.chain,
+				true: obj.deep(chains, event.pathParameters.chain)
+			}
 	    ];
   	}
 	
