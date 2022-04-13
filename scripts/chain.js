@@ -43,9 +43,12 @@ function buildChain(stepsArr, chain, chainName) {
   var chainMethod = function(memory) {
     var _args = arguments;
 
-    var getMemory = (_res, _rej, _chainName) => {
-      return memory && memory._remember
-        ? memory
+    var getMemory = (res, _rej, _chainName) => {
+      var isMemory = obj.deep(memory, "constructor.name") == "Memory";
+          _res = isMemory ? [res].concat(memory._res) : [res];
+          
+      return isMemory
+        ? memory._absorb(chain)._addTools({ _res  })
         : new Memory(chain)._addTools({ _res, _rej, _chainName, _args });
     };
 
@@ -101,6 +104,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
     chainName,
     isFinalStep: stepsArr.length == index+1,
     isSpecial: specials.includes(methodName),
+    isVariation: chain[methodName] || methodName == "chainMethod",
     index,
     methodName,
     prev,
@@ -158,10 +162,10 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
       return;
     },
     method: function(memory, rabbitTrail) {
-      var { nextStep, isFinalStep, isSpecial, handleError } = this,
+      var { nextStep, isFinalStep, isSpecial, isVariation, handleError } = this,
           { _res, _args } = memory;
 
-      var method = chain._steps[methodName] || stepPrint,
+      var method = chain[methodName] || chain._steps[methodName] || stepPrint,
           updater = specialProp == "if" ? "_condition" : "last";
 
       var next = (arg) => {
@@ -174,7 +178,9 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
         }
 
         if (isFinalStep || memory._endAll) {
-          var resolve = rabbitTrail || _res;
+          var resolve = rabbitTrail
+            ? rabbitTrail
+            : _res.shift();
 
           if (typeof resolve == "function") {
             resolve(memory[updater]);
@@ -213,12 +219,8 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
         return;
       }
 
-      var variation = methodName == "chainMethod" 
-            ? stepPrint
-            : chain[methodName];
-
-      if (variation) {
-        variation.steps(_args).method(memory, next);
+      if (isVariation) {
+        method(memory).then(next);
         return;
       }
 
