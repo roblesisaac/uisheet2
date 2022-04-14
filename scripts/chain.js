@@ -40,21 +40,29 @@ function buildChain(stepsArr, chain, chainName) {
     return buildSteps(instructs, chain, chainName);
   };
   
-  var chainMethod = function(memory) {
+  var chainMethod = function(memory, parentSpecial) {
     var _args = arguments;
 
     var getMemory = (res, _rej, _chainName) => {
       var isMemory = obj.deep(memory, "constructor.name") == "Memory";
-          _res = isMemory ? [res].concat(memory._res) : [res];
-          
-      return isMemory
-        ? memory._absorb(chain)._addTools({ _res  })
-        : new Memory(chain)._addTools({ _res, _rej, _chainName, _args });
+      
+      if(isMemory) {
+        var conditionMet = memory._chainName != _chainName,
+            _res = [res].concat(memory._res);
+        
+        return memory._absorb(chain, conditionMet)._addTools({ _res });
+      }
+
+      var tools = { _res: [res], _rej, _chainName, _args };
+      
+      return new Memory(chain)._addTools(tools);
     };
 
     return new Promise(function(res, rej) {
-      var steps = getSteps(_args);
-      steps.method(getMemory(res, rej, chainName));
+      var memry = getMemory(res, rej, chainName),
+          steps = getSteps(memry._args);
+          
+      steps.method(memry, null, parentSpecial);
     });
   };
 
@@ -104,7 +112,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
     chainName,
     isFinalStep: stepsArr.length == index+1,
     isSpecial: specials.includes(methodName),
-    isVariation: chain[methodName] || methodName == "chainMethod",
+    isVariation: !!chain[methodName] || methodName == "chainMethod",
     index,
     methodName,
     prev,
@@ -161,16 +169,17 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
       console.error(errMessage);
       return;
     },
-    method: function(memory, rabbitTrail) {
+    method: function(memory, rabbitTrail, parentSpecial) {
       var { nextStep, isFinalStep, isSpecial, isVariation, handleError } = this,
           { _res, _args } = memory;
 
       var method = chain[methodName] || chain._steps[methodName] || stepPrint,
-          updater = specialProp == "if" ? "_condition" : "last";
+          theSpecial = specialProp || parentSpecial,
+          updater = theSpecial == "if" ? "_condition" : "last";
 
       var next = (arg) => {
         if (typeof arg != "undefined") {
-          if (specialProp && memory._conditions) {
+          if (theSpecial && memory._conditions) {
             memory._conditions.push(arg);
           } else {
             memory[updater] = arg;
@@ -189,7 +198,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
           return;
         }
 
-        nextStep.call(this).method(memory, rabbitTrail);
+        nextStep.call(this).method(memory, rabbitTrail, parentSpecial);
       };
 
       var setupArgs = () => {
@@ -220,7 +229,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
       }
 
       if (isVariation) {
-        method(memory).then(next);
+        method(memory, specialProp).then(next);
         return;
       }
 
