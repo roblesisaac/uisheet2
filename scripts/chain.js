@@ -40,7 +40,7 @@ function buildChain(stepsArr, chain, chainName) {
     return buildSteps(instructs, chain, chainName);
   };
   
-  var chainMethod = function(memory, parentSpecial) {
+  var chainMethod = function(memory, parentSpecial, shouldAbsorb) {
     var _args = arguments;
 
     var getMemory = (res, _rej, _chainName) => {
@@ -49,8 +49,12 @@ function buildChain(stepsArr, chain, chainName) {
       if(isMemory) {
         var conditionMet = memory._chainName != _chainName,
             _res = [res].concat(memory._res);
+            
+        if(shouldAbsorb) {
+          memory._absorb(chain);
+        }
         
-        return memory._absorb(chain, conditionMet)._addTools({ _res });
+        return memory._addTools({ _res });
       }
 
       var tools = { _res: [res], _rej, _chainName, _args };
@@ -229,7 +233,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
       }
 
       if (isVariation) {
-        method(memory, specialProp).then(next);
+        method(memory, specialProp, !chain[methodName]).then(next);
         return;
       }
 
