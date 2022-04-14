@@ -4,9 +4,7 @@ function Memory(chain) {
   this._absorb(chain);
 }
 
-Memory.prototype._absorb = function(chain, conditionMet) {
-  if(arguments.length>1 && !conditionMet) return;
-  
+Memory.prototype._absorb = function(chain) {
   var bp = chain._blueprint,
       format = data => obj.copy(convert.toObject(data || {}, chain));
 
