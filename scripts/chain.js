@@ -190,9 +190,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
         }
 
         if (isFinalStep || memory._endAll) {
-          var resolve = rabbitTrail
-            ? rabbitTrail
-            : _res.shift();
+          var resolve = rabbitTrail || _res.shift();
 
           if (typeof resolve == "function") {
             resolve(memory[updater]);
