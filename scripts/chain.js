@@ -47,8 +47,7 @@ function buildChain(stepsArr, chain, chainName) {
       var isMemory = obj.deep(memory, "constructor.name") == "Memory";
       
       if(isMemory) {
-        var conditionMet = memory._chainName != _chainName,
-            _res = [res].concat(memory._res);
+        var _res = [res].concat(memory._res);
             
         if(shouldAbsorb) {
           memory._absorb(chain);
