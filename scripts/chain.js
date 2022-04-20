@@ -40,30 +40,32 @@ function buildChain(stepsArr, chain, chainName) {
     return buildSteps(instructs, chain, chainName);
   };
   
-  var chainMethod = function(memory, parentSpecial, shouldAbsorb) {
+  var chainMethod = function(memory, parentSpecial, chainIsForeign) {
     var _args = arguments;
-
+    
     var getMemory = (res, _rej, _chainName) => {
       var isMemory = obj.deep(memory, "constructor.name") == "Memory";
       
       if(isMemory) {
-        var _res = [res].concat(memory._res);
+        memory._res = [res].concat(memory._res);
             
-        if(shouldAbsorb) {
+        if(chainIsForeign || memory._args.length>1) {
           memory._absorb(chain);
         }
         
-        return memory._addTools({ _res });
+        return memory;
       }
 
-      var tools = { _res: [res], _rej, _chainName, _args };
+      var tools = { _res: [res], _rej, _chainName, _args: [_args] };
       
       return new Memory(chain)._addTools(tools);
     };
 
     return new Promise(function(res, rej) {
       var memry = getMemory(res, rej, chainName),
-          steps = getSteps(memry._args);
+          args = memry._args,
+          arg = args.length > 1 ? args.shift() : args[0];
+          steps = getSteps(arg);
           
       steps.method(memry, null, parentSpecial);
     });
@@ -71,6 +73,16 @@ function buildChain(stepsArr, chain, chainName) {
 
   chainMethod.steps = getSteps;
   chainMethod.step = getStep;
+  chainMethod._ = function(args) {
+    return function(res, next) {
+      var { _args, _step } = this,
+          { specialProp, chain, methodName } = _step;
+          
+      _args.unshift(convert.toArray(args))
+      
+      chainMethod(this, specialProp, chain[methodName]).then(next);
+    }
+  }; 
 
   if (chainName != "run") {
     chain._library.chains[chainName] = chainMethod;
@@ -243,9 +255,10 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
         var data = stepData();
 
         for (var key in data) {
-          var value = data[key];
-
-          data[key] = obj.deep(memory, value) || value;
+          var value = data[key],
+              def = obj.tip(memory, key);
+              
+          def.obj[def.prop] = obj.deep(memory, value) || value;
         }
 
         memory._remember(data);
