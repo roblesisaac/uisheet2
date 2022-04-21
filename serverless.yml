@@ -51,13 +51,18 @@ functions:
 #         enabled: false
   get:
     handler: handler.port
+    vpc:
+      securityGroupIds:
+        - ${env:SECURITY_GROUP_ID}
+      subnetIds:
+        - ${env:SUBNET_ID_PRIVATE}
     timeout: 30
     events:
       - httpApi: "any /"
       - httpApi: "any /{site}"
       - httpApi: "any /{site}/{sheetName}"
       - httpApi: "any /{site}/{sheetName}/{peach}"
-      - httpApi: "any /{site}/{sheetName}/{peach}/{arg}"
+      - httpApi: "any /{site}/{sheetName}/{peach}/{arg}" 
 
 # functions:
 #   hello:
