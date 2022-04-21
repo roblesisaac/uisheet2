@@ -9,7 +9,7 @@ const db = new Peach({
       this.next({
         message: `mongo is running ${this.sheetName} AT ${this.time}`,
         path: this.path,
-        mongoUser: process.env.mongo.username
+        mongoUser: process.env.MONGO_KEY
       });
     }
   },
