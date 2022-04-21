@@ -9,6 +9,9 @@ provider:
   region: us-west-1
   httpApi:
     cors: true
+    
+plugins:
+  - serverless-dotenv-plugin
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
