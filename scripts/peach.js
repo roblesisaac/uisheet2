@@ -2,7 +2,7 @@ const { convert, obj, type } = require("./utils");
 const { Memory } = require("./memory");
 const { globalSteps } = require("./globalSteps");
 
-function Chain(blueprint) {
+function Peach(blueprint) {
   var instruct = blueprint.instruct;
 
   var natives = {
@@ -15,54 +15,54 @@ function Chain(blueprint) {
   });
 
   if (!type.isObject(instruct)) {
-    buildChain(instruct, this, "run");
+    buildPeach(instruct, this, "run");
     return;
   }
 
   for (var vName in instruct) {
-    buildChain(instruct[vName], this, vName);
+    buildPeach(instruct[vName], this, vName);
   }
 }
 
-Chain.prototype._library = {
-  chains: {},
+Peach.prototype._library = {
+  peachs: {},
   specials: ["if", "each", "setup"],
   steps: globalSteps
 };
 
-Chain.prototype.addGlobalSteps = function(steps) {
-  Object.assign(Chain.prototype._library.steps, steps);
+Peach.prototype.addGlobalSteps = function(steps) {
+  Object.assign(Peach.prototype._library.steps, steps);
 };
 
-function buildChain(stepsArr, chain, chainName) {
+function buildPeach(stepsArr, peach, peachName) {
   var getSteps = function(args) {
     var instructs = convert.toInstruct(stepsArr, args);
-    return buildSteps(instructs, chain, chainName);
+    return buildSteps(instructs, peach, peachName);
   };
   
-  var chainMethod = function(memory, parentSpecial, chainIsForeign) {
+  var peachMethod = function(memory, parentSpecial, peachIsForeign) {
     var _args = arguments;
     
-    var getMemory = (res, _rej, _chainName) => {
+    var getMemory = (res, _rej, _peachName) => {
       var isMemory = obj.deep(memory, "constructor.name") == "Memory";
       
       if(isMemory) {
         memory._res = [res].concat(memory._res);
             
-        if(chainIsForeign || memory._args[1]) {
-          memory._absorb(chain);
+        if(peachIsForeign || memory._args[1]) {
+          memory._absorb(peach);
         }
         
         return memory;
       }
 
-      var tools = { _res: [res], _rej, _chainName, _args: [_args] };
+      var tools = { _res: [res], _rej, _peachName, _args: [_args] };
       
-      return new Memory(chain)._addTools(tools);
+      return new Memory(peach)._addTools(tools);
     };
 
     return new Promise(function(res, rej) {
-      var memry = getMemory(res, rej, chainName),
+      var memry = getMemory(res, rej, peachName),
           args = memry._args,
           arg = args[1] ? args.shift() : args[0];
           steps = getSteps(arg);
@@ -71,24 +71,24 @@ function buildChain(stepsArr, chain, chainName) {
     });
   };
 
-  chainMethod.steps = getSteps;
-  chainMethod.step = getStep;
-  chainMethod._ = function(args) {
+  peachMethod.steps = getSteps;
+  peachMethod.step = getStep;
+  peachMethod._ = function(args) {
     return function(res, next) {
       var { _args, _step } = this,
-          { specialProp, chain, methodName } = _step;
+          { specialProp, peach, methodName } = _step;
           
       _args.unshift(convert.toArray(args))
       
-      chainMethod(this, specialProp, chain[methodName]).then(next);
+      peachMethod(this, specialProp, peach[methodName]).then(next);
     }
   }; 
 
-  if (chainName != "run") {
-    chain._library.chains[chainName] = chainMethod;
+  if (peachName != "run") {
+    peach._library.peachs[peachName] = peachMethod;
   }
 
-  obj.assignNative(chain, chainName, chainMethod);
+  obj.assignNative(peach, peachName, peachMethod);
 }
 
 function getStep(sIndex, args, steps) {
@@ -99,7 +99,7 @@ function getStep(sIndex, args, steps) {
     : getStep(sIndex, args, steps.nextStep() || { missingIndex: sIndex });
 }
 
-function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
+function buildSteps(stepsArr, peach, peachName, prev, stepIndex, specialProp) {
   if (!stepsArr || !stepsArr.length || stepIndex == stepsArr.length) {
     return;
   }
@@ -107,7 +107,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
   var index = stepIndex || 0,
       stepPrint = stepsArr[index],
       isObj = type.isObject(stepPrint),
-      specials = chain._library.specials;
+      specials = peach._library.specials;
 
   var methodName = typeof stepPrint == "string" 
         ? stepPrint
@@ -119,15 +119,15 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
     instructs = instructs || stepsArr;
     previous = previous || this;
     sProp = sProp || specialProp;
-    return buildSteps(instructs, chain, chainName, previous, index, sProp);
+    return buildSteps(instructs, peach, peachName, previous, index, sProp);
   };
 
   return {
-    chain,
-    chainName,
+    peach,
+    peachName,
     isFinalStep: stepsArr.length == index+1,
     isSpecial: specials.includes(methodName),
-    isVariation: !!chain[methodName] || methodName == "chainMethod",
+    isVariation: !!peach[methodName] || methodName == "peachMethod",
     index,
     methodName,
     prev,
@@ -166,12 +166,12 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
       return buildSub.call(this, index + 1);
     },
     handleError: function(memory, error) {
-      var { _rej, _chainName } = memory,
+      var { _rej, _peachName } = memory,
         errMessage = {
         error,
         methodName,
-        chainName,
-        _chainName,
+        peachName,
+        _peachName,
         prev,
         stepPrint
       };
@@ -188,15 +188,15 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
       var { nextStep, isFinalStep, isSpecial, isVariation, handleError } = this,
           { _res, _args } = memory;
 
-      var method = chain[methodName] || chain._steps[methodName] || stepPrint,
+      var method = peach[methodName] || peach._steps[methodName] || stepPrint,
           theSpecial = specialProp || parentSpecial,
-          updater = theSpecial == "if" ? "_condition" : "args",
+          updater = theSpecial == "if" ? "_condition" : "res",
           self = this;
 
-      var next = function() {
+      var next = function(res) {
         if (arguments.length) {
           if (theSpecial && memory._conditions) {
-            memory._conditions.push(arg);
+            memory._conditions.push(res);
           } else {
             memory[updater] = Array.from(arguments);
           }
@@ -244,7 +244,7 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
       }
 
       if (isVariation) {
-        method(memory, specialProp, !chain[methodName]).then(next);
+        method(memory, specialProp, !peach[methodName]).then(next);
         return;
       }
 
@@ -289,4 +289,4 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
   }.init();
 }
 
-module.exports = { Chain, convert, obj, type };
+module.exports = { Peach, convert, obj, type };
