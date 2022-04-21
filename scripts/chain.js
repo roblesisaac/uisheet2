@@ -193,8 +193,8 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
           updater = theSpecial == "if" ? "_condition" : "args",
           self = this;
 
-      var next = function(arg) {
-        if (typeof arg != "undefined") {
+      var next = function() {
+        if (arguments.length) {
           if (theSpecial && memory._conditions) {
             memory._conditions.push(arg);
           } else {
