@@ -47,7 +47,7 @@ functions:
 #         enabled: false
   get:
     handler: handler.port
-    timeout: 30    
+    timeout: 50
     events:
       - httpApi: "any /"
       - httpApi: "any /{site}"
