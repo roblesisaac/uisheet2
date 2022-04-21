@@ -9,7 +9,8 @@ const db = new Chain({
       this.next({
         message: "mongo is running "+ this.sheetName,
         path: this.path,
-        event: this.event
+        event: this.event,
+        time: this.time
       });
     }
   },
