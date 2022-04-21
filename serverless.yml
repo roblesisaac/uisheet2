@@ -1,6 +1,7 @@
 service: uisheet2
 
 frameworkVersion: '3'
+useDotenv: true
 
 provider:
   name: aws
