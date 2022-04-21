@@ -1,12 +1,12 @@
 const { convert, obj, type } = require("./utils");
 
-function Memory(chain) {
-  this._absorb(chain);
+function Memory(peach) {
+  this._absorb(peach);
 }
 
-Memory.prototype._absorb = function(chain) {
-  var bp = chain._blueprint,
-      format = data => obj.copy(convert.toObject(data || {}, chain));
+Memory.prototype._absorb = function(peach) {
+  var bp = peach._blueprint,
+      format = data => obj.copy(convert.toObject(data || {}, peach));
 
   var assignProps = (assignee, dataObj) => {
     if (!dataObj) return;
@@ -20,11 +20,11 @@ Memory.prototype._absorb = function(chain) {
           get: value.bind(this)
         });
       },
-      getAndSetFromChain = (prop) => {
+      getAndSetFromPeach = (prop) => {
         define(prop, {
           enumerable: true,
-          get: () => chain[prop],
-          set: (newValue) => chain[prop] = newValue
+          get: () => peach[prop],
+          set: (newValue) => peach[prop] = newValue
         });
       };
 
@@ -37,8 +37,8 @@ Memory.prototype._absorb = function(chain) {
         return;
       };
 
-      if (obj.hasProp(chain, prop)) {
-        getAndSetFromChain(prop);
+      if (obj.hasProp(peach, prop)) {
+        getAndSetFromPeach(prop);
         return;
       }
 
@@ -53,7 +53,7 @@ Memory.prototype._absorb = function(chain) {
     Object.keys(data).forEach(assignProp);
   };
 
-  assignProps(chain, bp.state);
+  assignProps(peach, bp.state);
   assignProps(this, bp.state);
   assignProps(this, bp.input);
   
