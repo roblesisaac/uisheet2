@@ -12,7 +12,7 @@ module.exports = new Peach({
 	  { event },
 	  getPath(event),
 	  {
-		if: { has: "chain" },
+		if: { has: "peach" },
 		true: obj.deep(peaches, getPath(event).peach)
 	  }
 	]
