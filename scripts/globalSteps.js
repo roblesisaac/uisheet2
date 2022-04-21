@@ -1,10 +1,10 @@
 const { convert, obj, type } = require("./utils");
 
 const globalSteps = {
-  "&": function(last) {
+  "&": function(res) {
     if (!this._conditions) {
       this._addTools({
-        _conditions: [last]
+        _conditions: [res]
       });
     }
   },
@@ -12,7 +12,7 @@ const globalSteps = {
     var message = obj.deep(this, messageProp);
     alert(message || messageProp);
   },
-  each: function(notSure, next) {
+  each: function(res, next) {
     var each = this._step.each,
         getData = each.each,
         iteration = each.run || each.async;
@@ -54,7 +54,7 @@ const globalSteps = {
     var item = obj.deep(this, props);
     this.next(!!item || item === 0);
   },
-  if: function(last, next) {
+  if: function(res, next) {
     var data = this._step.if,
         condition = data.if || data.switch;
 
@@ -83,6 +83,7 @@ const globalSteps = {
   },
   isString: function(item) {
     var constant = obj.deep(this, item);
+    
     this.next(typeof constant == "string");
   },
   log: function(messageProp) {
@@ -92,7 +93,7 @@ const globalSteps = {
 
     console.log(message);
   },
-  restart: function(last, next) {
+  restart: function(res, next) {
     var step = this._step,
         restart = () => step.firstStep().method(this);
 
