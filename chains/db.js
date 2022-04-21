@@ -2,7 +2,7 @@ const { Chain } = require("scripts/chain");
 
 const db = new Chain({
   input: {
-    time: () => Date.now()
+    time: Date.now()
   },
   steps: {
     initMongo: function() {
