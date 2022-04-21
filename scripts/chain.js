@@ -49,7 +49,7 @@ function buildChain(stepsArr, chain, chainName) {
       if(isMemory) {
         memory._res = [res].concat(memory._res);
             
-        if(chainIsForeign || memory._args.length>1) {
+        if(chainIsForeign || memory._args[1]) {
           memory._absorb(chain);
         }
         
@@ -64,7 +64,7 @@ function buildChain(stepsArr, chain, chainName) {
     return new Promise(function(res, rej) {
       var memry = getMemory(res, rej, chainName),
           args = memry._args,
-          arg = args.length > 1 ? args.shift() : args[0];
+          arg = args[1] ? args.shift() : args[0];
           steps = getSteps(arg);
           
       steps.method(memry, null, parentSpecial);
