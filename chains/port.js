@@ -1,19 +1,19 @@
-const { Chain, convert, obj, type } = require("scripts/chain");
+const { Peach, convert, obj, type } = require("scripts/chain");
 
-var chains = {
+var peaches = {
 	brain: require("./brain"),
 	db: require("./db")
 };
 
 const getPath = event => event.pathParameters;
 
-module.exports = new Chain({
+module.exports = new Peach({
 	instruct: event => [
 	  { event },
 	  getPath(event),
 	  {
 		if: { has: "chain" },
-		true: obj.deep(chains, getPath(event).chain)
+		true: obj.deep(peaches, getPath(event).peach)
 	  }
 	]
 });
