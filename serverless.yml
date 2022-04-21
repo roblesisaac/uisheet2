@@ -1,4 +1,4 @@
-service: uisheet2
+service: peachyPeachy
 
 frameworkVersion: '3'
 useDotenv: true
