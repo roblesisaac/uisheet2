@@ -1,3 +1,7 @@
+const { convert, obj, type } = require("./utils");
+const { Memory } = require("./memory");
+const { globalSteps } = require("./globalSteps");
+
 function Chain(blueprint) {
   var instruct = blueprint.instruct;
 
@@ -284,3 +288,5 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
     }
   }.init();
 }
+
+module.exports = { Chain, convert, obj, type };
