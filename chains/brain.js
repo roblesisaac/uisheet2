@@ -1,6 +1,6 @@
-const { Chain } = require("scripts/chain");
+const { Peach } = require("scripts/peach");
 
-const brain = new Chain({
+const brain = new Peach({
   input: {
     brainKey: "brain1234"
   },
