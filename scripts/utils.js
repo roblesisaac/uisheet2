@@ -1,7 +1,10 @@
 var convert = {
   toArray: (data) => {
-    return Array.isArray(data) ?
-      data : [data];
+    return Array.isArray(data)
+      ? data 
+      : Object.prototype.toString.call(data) == "[object Arguments]"
+      ? Array.from(data)
+      : [data];
   },
   toInstruct: (steps, args) => {
     return (
