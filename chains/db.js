@@ -1,6 +1,6 @@
-const { Chain } = require("scripts/chain");
+const { Peach } = require("scripts/peach");
 
-const db = new Chain({
+const db = new Peach({
   input: {
     time: Date.now()
   },
