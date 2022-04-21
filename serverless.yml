@@ -52,8 +52,8 @@ functions:
       - httpApi: "any /"
       - httpApi: "any /{site}"
       - httpApi: "any /{site}/{sheetName}"
-      - httpApi: "any /{site}/{sheetName}/{chain}"
-      - httpApi: "any /{site}/{sheetName}/{chain}/{arg}"
+      - httpApi: "any /{site}/{sheetName}/{peach}"
+      - httpApi: "any /{site}/{sheetName}/{peach}/{arg}"
 
 # functions:
 #   hello:
