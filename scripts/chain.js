@@ -1,7 +1,3 @@
-const { convert, obj, type } = require("./utils");
-const { Memory } = require("./memory");
-const { globalSteps } = require("./globalSteps");
-
 function Chain(blueprint) {
   var instruct = blueprint.instruct;
 
@@ -190,14 +186,15 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
 
       var method = chain[methodName] || chain._steps[methodName] || stepPrint,
           theSpecial = specialProp || parentSpecial,
-          updater = theSpecial == "if" ? "_condition" : "last";
+          updater = theSpecial == "if" ? "_condition" : "args",
+          self = this;
 
-      var next = (arg) => {
+      var next = function(arg) {
         if (typeof arg != "undefined") {
           if (theSpecial && memory._conditions) {
             memory._conditions.push(arg);
           } else {
-            memory[updater] = arg;
+            memory[updater] = Array.from(arguments);
           }
         }
 
@@ -205,23 +202,24 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
           var resolve = rabbitTrail || _res.shift();
 
           if (typeof resolve == "function") {
-            resolve(memory[updater]);
+            var output = memory[updater] || [];
+            resolve(output[0]);
           }
 
           return;
         }
 
-        nextStep.call(this).method(memory, rabbitTrail, parentSpecial);
+        nextStep.call(self).method(memory, rabbitTrail, parentSpecial);
       };
 
       var setupArgs = () => {
         var arr = isObj && !isSpecial 
-              ? convert.toArray(stepPrint[methodName])
-              : [memory.last];
-
-        arr.push(next);
-
-        return arr;
+              ? stepPrint[methodName]
+              : memory[updater];
+              
+        arr = convert.toArray(arr);
+        
+        return arr.concat([next]);
       };
 
       var stepData = () => {
@@ -286,5 +284,3 @@ function buildSteps(stepsArr, chain, chainName, prev, stepIndex, specialProp) {
     }
   }.init();
 }
-
-module.exports = { Chain, convert, obj, type };
