@@ -1,6 +1,5 @@
 node_modules
 .serverless
-variables.json
 /frontend/misc.md
 .env
 .webpack
