@@ -38,11 +38,11 @@ const db = new Peach({
     },
     promiseResolve: function() {
       Promise.resolve(client);
+      this.next();
     }
   },
   instruct: {
-    init: "fetchCollection",
-    inits: () => [
+    init: () => [
       {
         if: "isConnected",
         true: ["promiseResolve", "fetchCollection"],
