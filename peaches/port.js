@@ -15,10 +15,10 @@ module.exports = new Peach({
 		const params = event.pathParameters
 		
 		return [
-			{ event, paramas },
+			{ event, params },
 			{
 				if: { has: "peach" },
-				true: function(){ this.next(params) }
+				true: obj.deep(peaches, params.peach)
 			}
 		];
 	}
