@@ -1,37 +1,37 @@
 const { Peach } = require("scripts/peach");
-const mongoose = require("mongoose");
+const { MongoClient, ServerApiVersion } = require("mongodb");
+let db = null;
 
 const db = new Peach({
-  input: {
-    time: () => Date.now()
-  },
   steps: {
     connect: function() {
       var options = {
-        useCreateIndex: true,
-        autoIndex: true,
-        keepAlive: true
+        useNewUrlParser: true, 
+        useUnifiedTopology: true, 
+        serverApi: ServerApiVersion.v1
       };
       
-      mongoose.connect(process.env.DB, options).then(database => {
-        isConnected = database.connections[0].readyState;
+      const client = new MongoClient(process.env.DB, options);
+      
+      client.connect(err => {
+        const collection = client.db("db").collection("sheets");
         this.next();
+        // perform actions on the collection object
+        client.close();
       });
+      
+    },
+    isConnected: function() {
+      this.next(!!db && !!db.serverConfig.isConnected);
     },
     promiseResolve: function() {
-      Promise.resolve();
-    },
-    initMongo: function() {
-      this.next({
-        message: `mongo is running ${this.sheetName} AT ${this.time}`,
-        path: this.path
-      });
+      Promise.resolve(db);
     }
   },
   instruct: {
     init: () => [
       {
-        if: !!isConnected,
+        if: "isConnected",
         true: "promiseResolve",
         false: "connect"
       }
