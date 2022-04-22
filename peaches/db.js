@@ -30,8 +30,8 @@ const db = new Peach({
       this.next(!!dbPeach);
     },
     fetchCollection: function() {
-      dbPeach.collection(this.sheetName).find({}).then(res => {
-        this.next({res});
+      dbPeach.collection(this.sheetName).find({}, (res) => {
+        this.next({ res, sheetName: this.sheetName });
       });
     },
     promiseResolve: function() {
