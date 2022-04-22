@@ -2,7 +2,7 @@ const { Peach } = require("scripts/peach");
 
 const db = new Peach({
   input: {
-    time: Date.now()
+    time: () => Date.now()
   },
   steps: {
     initMongo: function() {
