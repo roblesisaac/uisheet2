@@ -12,6 +12,6 @@ try {
   
 } catch (e) {
   
-  module.exports.port = async () => e.toString();
+  module.exports.port = () => e.toString();
   
 }
