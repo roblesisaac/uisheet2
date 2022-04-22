@@ -16,7 +16,7 @@ module.exports = new Peach({
 		
 		return [
 			{ event },
-			params
+			params,
 			{
 				if: { has: "peach" },
 				true: obj.deep(peaches, params.peach)
