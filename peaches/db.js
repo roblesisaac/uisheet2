@@ -1,4 +1,4 @@
-const { Peach } = require("scripts/peach");
+const { Peach } = require("natives/peach");
 const { MongoClient, ServerApiVersion } = require("mongodb");
 let client = null;
 
@@ -46,6 +46,7 @@ const db = new Peach({
   },
   instruct: {
     init: () => [
+      "fetchCollection",
       {
         if: "isConnected",
         false: [
