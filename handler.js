@@ -4,7 +4,7 @@ try {
   
 const port = require("./peaches/port");
 
-module.exports.port = async event => port.run(event)
+module.exports.port = async event => await port.run(event)
   .then(response => response)
   .catch(e => e);
   
