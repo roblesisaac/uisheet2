@@ -14,10 +14,10 @@ const db = new Peach({
       const Client = new MongoClient(process.env.DB, options);
       
       Client.connect(err => {
-        if(err) {
-          this.next({ err: err.toString() });
-          return;
-        }
+        // if(err) {
+        //   this.next({ err: err.toString() });
+        //   return;
+        // }
         
         dbPeach = Client.db("db");
         this.next({ message: "connected!" });
