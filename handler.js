@@ -2,7 +2,7 @@
 
 try {
   
-  const Port = requires("./peaches/port");
+  const Port = require("./peaches/port");
   
   const port = event => Port.run(event)
       .then(response => response)
