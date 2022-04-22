@@ -37,7 +37,7 @@ const db = new Peach({
       // });
     },
     promiseResolve: function() {
-      Promise.resolve(client).then(r => {
+      Promise.resolve().then(r => {
         this.next({ r });
       }).catch(e => {
         this.next({ e, err: e.toString() });
