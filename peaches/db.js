@@ -15,7 +15,7 @@ const db = new Peach({
       
       Client.connect().then(res => {
         client = res;
-        this.next({ client, message: "hi" });
+        this.next({ message: "hi" });
       });
       
       // client.connect(err => {
@@ -30,7 +30,8 @@ const db = new Peach({
       this.next(!!client);
     },
     promiseResolve: function() {
-      Promise.resolve(connection);
+      Promise.resolve(client);
+      this.next({ m: "already" });
     }
   },
   instruct: {
