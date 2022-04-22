@@ -1,6 +1,6 @@
 const { Peach } = require("scripts/peach");
 const { MongoClient, ServerApiVersion } = require("mongodb");
-let db = null;
+let connection = null;
 
 const db = new Peach({
   steps: {
@@ -15,17 +15,17 @@ const db = new Peach({
       
       client.connect(err => {
         const collection = client.db("db").collection("sheets");
-        this.next();
+        this.next({ message: "connected!" });
         // perform actions on the collection object
         client.close();
       });
       
     },
     isConnected: function() {
-      this.next(!!db && !!db.serverConfig.isConnected);
+      this.next(!!connection && !!connection.serverConfig.isConnected);
     },
     promiseResolve: function() {
-      Promise.resolve(db);
+      Promise.resolve(connection);
     }
   },
   instruct: {
