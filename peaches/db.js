@@ -20,7 +20,7 @@ const db = new Peach({
         // }
         
         dbPeach = Client.db("db");
-        this.next({ message: "connected!" });
+        this.next({ message: "connected!", err: err.toString() });
         // perform actions on the collection object
         Client.close();
       });
