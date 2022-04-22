@@ -48,7 +48,10 @@ const db = new Peach({
     init: () => [
       {
         if: "isConnected",
-        true: ["promiseResolve", "fetchCollection"],
+        true: [
+          // "promiseResolve", 
+          "fetchCollection"
+        ],
         false: "connect"
       }
     ]
