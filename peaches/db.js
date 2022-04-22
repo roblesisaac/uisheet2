@@ -37,7 +37,7 @@ const db = new Peach({
       // });
     },
     promiseResolve: function() {
-      Promise.resolve(dbPeach);
+      Promise.resolve(client);
     }
   },
   instruct: {
