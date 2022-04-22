@@ -1,4 +1,4 @@
-const { Peach, convert, obj, type } = require("scripts/peach");
+const { Peach, convert, obj, type } = require("natives/peach");
 
 var peaches = {
 	brain: require("./brain"),
