@@ -51,11 +51,11 @@ functions:
 #         enabled: false
   get:
     handler: handler.port
-    vpc:
-      securityGroupIds:
-        - ${env:SECURITY_GROUP_ID}
-      subnetIds:
-        - ${env:SUBNET_ID_PRIVATE}
+#     vpc:
+#       securityGroupIds:
+#         - ${env:SECURITY_GROUP_ID}
+#       subnetIds:
+#         - ${env:SUBNET_ID_PRIVATE}
     timeout: 30
     events:
       - httpApi: "any /"
