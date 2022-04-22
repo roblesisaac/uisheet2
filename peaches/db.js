@@ -19,10 +19,10 @@ const db = new Peach({
           return;
         }
         
-        dbPeach = client.db("db");
+        dbPeach = Client.db("db");
         this.next({ message: "connected!" });
         // perform actions on the collection object
-        client.close();
+        Client.close();
       });
       
     },
