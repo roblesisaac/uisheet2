@@ -1,4 +1,4 @@
-const { Peach } = require("scripts/peach");
+const { Peach } = require("natives/peach");
 
 const brain = new Peach({
   input: {
