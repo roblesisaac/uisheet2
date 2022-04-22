@@ -5,15 +5,21 @@ var peaches = {
 	db: require("./db")
 };
 
-const getPath = event => event.pathParameters;
-
 module.exports = new Peach({
-	instruct: event => [
-	  { event },
-	  getPath(event),
-	  {
-		if: { has: "peach" },
-		true: obj.deep(peaches, getPath(event).peach)
-	  }
-	]
+	steps: {
+		runChain: function() {
+			peaches[this.peach]()
+		}
+	},
+	instruct: (event) => {
+		const params = event.pathParameters
+		
+		return [
+			{ event, paramas },
+			{
+				if: { has: "peach" },
+				true: peaches[params.peach]
+			}
+		];
+	}
 });
