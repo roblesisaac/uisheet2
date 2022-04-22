@@ -45,7 +45,8 @@ const db = new Peach({
     }
   },
   instruct: {
-    init: () => [
+    init: () => ["fetchCollection"],
+    inits: () => [
       {
         if: "isConnected",
         true: [
