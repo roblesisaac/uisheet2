@@ -6,11 +6,6 @@ var peaches = {
 };
 
 module.exports = new Peach({
-	steps: {
-		runChain: function() {
-			peaches[this.peach]()
-		}
-	},
 	instruct: (event) => {
 		const params = event.pathParameters
 		
