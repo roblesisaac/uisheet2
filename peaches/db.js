@@ -15,7 +15,7 @@ const db = new Peach({
       
       Client.connect(err => {
         if(err) {
-          this.next({ err });
+          this.next({ err: err.toString() });
           return;
         }
         
