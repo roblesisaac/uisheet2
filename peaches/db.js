@@ -46,6 +46,7 @@ const db = new Peach({
   },
   instruct: {
     init: [
+      { wait: 10 },
       {
         if: "isConnected",
         false: [
