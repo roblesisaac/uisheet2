@@ -1,6 +1,6 @@
 const { Peach } = require("scripts/peach");
 const { MongoClient, ServerApiVersion } = require("mongodb");
-let dbPeach = null;
+let client = null;
 
 const db = new Peach({
   steps: {
@@ -11,23 +11,24 @@ const db = new Peach({
         serverApi: ServerApiVersion.v1
       };
       
-      const Client = new MongoClient(process.env.DB, options);
+      client = new MongoClient(process.env.DB, options);
       
-      Client.connect(err => {
-        // if(err) {
-        //   this.next({ err: err.toString() });
-        //   return;
-        // }
-        
-        dbPeach = Client.db("db");
-        this.next({ message: "connected!", err: err.toString() });
-        // perform actions on the collection object
-        Client.close();
+      client.connect(err => {
+        const collection = client.db("db").collection("sheets");
+        this.next({ collection });
+        client.close();
       });
+      
+      // client.connect(err => {
+      //   dbPeach = client.db("db");
+      //   this.next({ message: "connected!", err: err.toString() });
+      //   // perform actions on the collection object
+      //   client.close();
+      // });
       
     },
     isConnected: function() {
-      this.next(!!dbPeach);
+      this.next(!!client);
     },
     fetchCollection: function() {
       this.next({sheetName: this.sheetName});
