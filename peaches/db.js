@@ -31,7 +31,7 @@ const db = new Peach({
     },
     promiseResolve: function() {
       Promise.resolve(dbPeach);
-      this.next({ m: "already" });
+      this.next({ m: "already", dbPeach });
     }
   },
   instruct: {
