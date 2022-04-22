@@ -31,7 +31,8 @@ const db = new Peach({
       this.next(!!client);
     },
     fetchCollection: function() {
-      this.next({ sheetName: this.sheetName });
+      console.log({ sheetName });
+      this.next({ message: "hi" });
       // dbPeach.collection(this.sheetName).find({}, (res) => {
       //   this.next({ res, sheetName: this.sheetName });
       // });
@@ -46,7 +47,6 @@ const db = new Peach({
   },
   instruct: {
     init: [
-      { wait: 10 },
       {
         if: "isConnected",
         false: [
