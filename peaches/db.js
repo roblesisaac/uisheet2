@@ -45,15 +45,12 @@ const db = new Peach({
     }
   },
   instruct: {
-    init: () => [
-      "fetchCollection",
+    init: [
       {
         if: "isConnected",
         false: [
-          // "promiseResolve", 
           "fetchCollection"
-        ],
-        falses: "connect"
+        ]
       }
     ]
   }
