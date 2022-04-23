@@ -9,7 +9,7 @@ try {
       .then(response => response)
       .catch(e => e);
    
-    return event;
+    return { event, test };
   }
 
   module.exports = { port };
