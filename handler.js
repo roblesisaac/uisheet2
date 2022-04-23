@@ -4,9 +4,13 @@ try {
   
   const Port = require("./peaches/port");
   
-  const port = event => Port.run(event)
+  const port = async (event) => {
+    Port.run(event)
       .then(response => response)
       .catch(e => e);
+   
+    return event;
+  }
 
   module.exports = { port };
   
