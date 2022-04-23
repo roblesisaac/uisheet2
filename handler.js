@@ -4,13 +4,24 @@ try {
   
   const Port = require("./peaches/port");
   
-  const port = async (event) => {
-    var test = await Port.run(event)
-      .then(response => response)
-      .catch(e => typeof e == "string" ? Object.keys(e));
-   
-    return { event, test };
+  const handleError = (e) => {
+    if(typeof e == "string") {
+      return e;
+    }
+    
+    const validKeys = [ "error", "methodName", "peachName", "_peachName" ],
+          error = {};
+    
+    Object.keys(e).forEach(key => {
+      if(validKeys.includes(key)) error[key] = e[key];
+    });
+    
+    return error;
   }
+  
+  const port = event => Port.run(event)
+      .then(response => response)
+      .catch(handleError);
 
   module.exports = { port };
   
