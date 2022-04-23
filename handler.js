@@ -5,7 +5,7 @@ try {
   const Port = require("./peaches/port");
   
   const port = async (event) => {
-    Port.run(event)
+    var test = await = Port.run(event)
       .then(response => response)
       .catch(e => e);
    
