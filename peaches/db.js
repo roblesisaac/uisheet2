@@ -14,17 +14,15 @@ const db = new Peach({
       client = new MongoClient(process.env.DB, options);
       
       client.connect(err => {
+        if(err) {
+          this.next(err);
+          return;
+        };
+        
         const collection = client.db("db").collection("sheets");
         this.next({ collection });
         client.close();
       });
-      
-      // client.connect(err => {
-      //   dbPeach = client.db("db");
-      //   this.next({ message: "connected!", err: err.toString() });
-      //   // perform actions on the collection object
-      //   client.close();
-      // });
       
     },
     isConnected: function() {
