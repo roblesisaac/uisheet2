@@ -31,7 +31,7 @@ const db = new Peach({
       this.next(!!client);
     },
     fetchCollection: function() {
-      dbPeach.collection(this.sheetName).find({}, (res) => {
+      client.db("db").collection("sheets");.find({}, (res) => {
         this.next({ res, sheetName: this.sheetName });
       });
     },
