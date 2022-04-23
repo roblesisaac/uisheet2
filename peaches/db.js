@@ -31,9 +31,7 @@ const db = new Peach({
       this.next(!!client);
     },
     fetchCollection: function() {
-      client.db("db").collection("sheets").find({}, (res) => {
-        this.next({ res });
-      });
+      client.db("db").collection("sheets").find({}).then(res => res);
     },
     promiseResolve: function() {
       Promise.resolve().then(r => {
