@@ -31,11 +31,9 @@ const db = new Peach({
       this.next(!!client);
     },
     fetchCollection: function() {
-      console.log({ sheetNames });
-      this.next({ message: "hi" });
-      // dbPeach.collection(this.sheetName).find({}, (res) => {
-      //   this.next({ res, sheetName: this.sheetName });
-      // });
+      dbPeach.collection(this.sheetName).find({}, (res) => {
+        this.next({ res, sheetName: this.sheetName });
+      });
     },
     promiseResolve: function() {
       Promise.resolve().then(r => {
@@ -47,12 +45,10 @@ const db = new Peach({
   },
   instruct: {
     init: [
-      "fetchCollection",
       {
         if: "isConnected",
-        false: [
-          "fetchCollection"
-        ]
+        true: ["promiseResolve", "fetchCollection"],
+        false: "connect"
       }
     ]
   }
