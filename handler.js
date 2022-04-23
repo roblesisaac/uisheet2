@@ -8,7 +8,10 @@ try {
     var test = await Port.run(event)
       .then(response => response)
       .catch((e) => {
-        return JSON.stringify(e);
+        return {
+          keys: Object.keys(e),
+          str: e.toString()
+        };
       });
    
     return { event, test };
