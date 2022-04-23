@@ -5,10 +5,6 @@ try {
   const Port = require("./peaches/port");
   
   const handleError = (e) => {
-    if(typeof e == "string") {
-      return e;
-    }
-    
     const validKeys = [ "error", "methodName", "peachName", "_peachName" ],
           error = {};
     
