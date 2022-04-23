@@ -7,7 +7,7 @@ try {
   const port = async (event) => {
     var test = await Port.run(event)
       .then(response => response)
-      .catch(e => e);
+      .catch(e => e.toString());
    
     return { event, test };
   }
