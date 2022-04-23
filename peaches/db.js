@@ -11,11 +11,11 @@ const db = new Peach({
         serverApi: ServerApiVersion.v1
       };
       
-      client = new MongoClient(process.env.DB, options);
+      var client = new MongoClient(process.env.DB, options);
       
       client.connect(err => {
         if(err) {
-          this.next(err);
+          this.next(err.toString());
           return;
         };
         
