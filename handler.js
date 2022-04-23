@@ -7,7 +7,7 @@ try {
   const port = async (event) => {
     var test = await Port.run(event)
       .then(response => response)
-      .catch(e => e.toString());
+      .catch(e => typeof e == "string" ? e : JSON.stringify(e));
    
     return { event, test };
   }
