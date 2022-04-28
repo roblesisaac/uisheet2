@@ -13,21 +13,16 @@ const db = new Peach({
       
       var client = new MongoClient(process.env.DB, options);
       
-      this.next({
-        db: process.env.DB,
-        message: "Hi"
-      });
-      
-      // client.connect(err => {
-      //   if(err) {
-      //     this.next(err.toString());
-      //     return;
-      //   };
+      client.connect(err => {
+        if(err) {
+          this.next(err.toString());
+          return;
+        }
         
-      //   const collection = client.db("db").collection("sheets");
-      //   this.next({ collection });
-      //   client.close();
-      // });
+        // const collection = client.db("db").collection("sheets");
+        this.next({ collection: "collected" });
+        client.close();
+      });
       
     },
     isConnected: function() {
